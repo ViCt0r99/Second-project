@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Filter by category</title>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <h1 style="text-align: center">You are using category filter:</h1>
+
+        <div class="form">
+            <form method="post">
+                <input type="text" name="category_filter" id="category_filter">
+                <br>
+                <input type="submit" value="Search">
+                <a href="/filter">Return</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

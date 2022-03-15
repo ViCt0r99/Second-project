@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Bookshelf</title>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <h1 style="text-align: center">Your database</h1>
+        {% if base|length < 1 %}
+            <h4 style="text-align: center">There are no records when using such filter</h4>
+            <a href="/filter">Return</a>
+        {% else %}
+            <h4 style="text-align: center">This is your filtered database<br><a href="/filter">Return</a></h4>
+            <table class="center">
+                <tr>
+                    <th>DBN</th>
+                    <th>School Name</th>
+                    <th>Category</th>
+                    <th>Total enrollment</th>
+                    <th>Male</th>
+                    <th>Female</th>
+                    <th>Asian</th>
+                    <th>Black</th>
+                    <th>White</th>
+                    <th>Other</th>
+                </tr>
+                {% for record in base %}
+                    <tr>
+                        <td>{{ record.DBN }}</td>
+                        <td>{{ record.School_Name }}</td>
+                        <td>{{ record.Category }}</td>
+                        <td>{{ record.TotalEnroll }}</td>
+                        <td>{{ record.Male }}</td>
+                        <td>{{ record.Female }}</td>
+                        <td>{{ record.Asian }}</td>
+                        <td>{{ record.Black }}</td>
+                        <td>{{ record.White }}</td>
+                        <td>{{ record.Other }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+
+        {% endif %}
+
+    </div>
+{% endblock %}

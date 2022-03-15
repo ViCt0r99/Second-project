@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+
+
+  techsproject:
+    build: ./app
+    volumes:
+      - ./app:/usr/src/app
+    environment:
+      CELERY_BROKER_URL: redis://localhost:6379
+      ELERY_RESULT_BACKEND: redis://localhost:6379
+      -SQLALCHEMY_DATABASE_URI: postgresql://localhost:5432/test
+      -SECRET_KEY: 1234
+    ports:
+      - "8000:5000"
+    depends_on:
+      - redis
+      - postgres
+
+  celery:
+    build: ./app
+    command: celery -A main.celery worker --loglevel=info
+    volumes:
+      - ./app/:/usr/src/app
+    depends_on:
+      - redis
+      - techsproject
+
+  postgres:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: wiktorjaniszewski
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: test
+    volumes:
+      - postgresql:/var/lib/postgresql
+
+volumes:
+    postgresql:

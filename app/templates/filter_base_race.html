@@ -1,0 +1,25 @@
+{% from "forms_helpers.html" import render_field %}
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Database filter</title>
+{% endblock %}
+
+{% block body %}
+<div class="content" style="text-align: center">
+    <h2 style="text-align: center">You are using race filter:</h2>
+	<form method="POST" action="/filter_base_race" class="form-field" style="text-align: center">
+	   <dl>
+	    {{ form.csrf_token }}
+		{{ render_field(form.race) }}
+		   <br>
+		   <h4>Enter range of values</h4>
+		   <br>
+	    {{ render_field(form.value_1) }}
+	    {{ render_field(form.value_2) }}
+	    <input type="submit" value="Filter">
+         <a href="/filter">Return</a>
+	    </dl>
+	</form>
+</div>
+{% endblock %}
